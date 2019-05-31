@@ -33,8 +33,9 @@ func main() {
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(hub, w, r)
 	})
-	err := http.ListenAndServe(*addr, nil)
-	if err != nil {
+	http.Handle("/favicon.ico", http.NotFoundHandler())
+	log.Println("server start at :8080")
+	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
